@@ -1,0 +1,31 @@
+
+   
+<table class = "table">
+  <thead>
+    <tr style="background-color:rgba(107,90,105,0.1);">
+      <th>商品ID</th>
+      <th>商品名</th>
+      <th>税抜価格</th>
+      <th>ジャンル</th>
+      <th>ステータス</th>
+   </tr>
+  </thead>
+<% items.each do |item| %>
+  <tbody>
+    <tr>
+      <td><%= item.id %></td>
+      <td>
+        <%= link_to admin_item_path(item.id), class:"text-dark border-bottom" do %>
+          <%= item.name %>
+        <% end %>
+      </td>
+      <td><%= item.price %></td>
+      <td> <%= item.genre.name %></td>
+      <td> <%= item.is_status ? '販売中' : '販売停止中'  %> </td>
+    </tr>
+  </tbody>
+  <% end %>
+</table>
+<div class = "justify-content-center" >
+  <%= paginate items %>
+</div>

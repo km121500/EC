@@ -1,0 +1,22 @@
+<div class = "container">
+  
+  <p class="text-success"><%= flash[:notice]%></p>
+  <div class = "row mt-5">
+    <div class = "col-md-2">
+      <h3 class = "admin-items-index text-center" style="background-color:rgba(107,90,105,0.1);">商品一覧</h3>
+    </div>
+    <div class = "col-md-8"></div>
+    <div class = "col-md-2">
+        <%= link_to new_admin_item_path do %>
+          <i class="fas fa-plus-circle fa-3x"></i>
+        <% end %>
+    </div>
+  </div>
+
+  <div class = "row mt-5">
+    <div class = "col">
+      <%= render 'admin/items/index', items: @items %>
+    </div>
+  </div>
+
+</div>
