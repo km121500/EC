@@ -8,8 +8,7 @@ Rails.application.routes.draw do
   devise_for :admin,skip: [:registrations, :passwords], controllers: {
     sessions: "admin/sessions"
   }
-
-
+  
   namespace :admin do
     root to: 'homes#top'
     resources :items, except: [:destroy]
@@ -18,8 +17,8 @@ Rails.application.routes.draw do
     resources :genres, only: [:index, :create, :edit, :update]
     resources :order_details, only: [:update]
   end
-
-   scope module: :public do
+  
+  scope module: :public do
     root to: 'homes#top'
     get '/about' => 'homes#about'
     resources :addresses, except: [:new, :show]
@@ -35,14 +34,13 @@ Rails.application.routes.draw do
     resources :orders, except: [:edit, :update, :destroy]
     patch 'customers/'=> 'customers#update'
     resources :customers, only: [] do
-    collection do
-      get :show
-      get :edit
-      patch :leave
-      get :erasure
+      collection do
+        get :show
+        get :edit
+        patch :leave
+        get :erasure
+      end
     end
-    get '/search', to: 'searchs#search'
-    end
-
-   end
+  end
+      get '/search', to: 'searchs#search'
 end

@@ -1,0 +1,15 @@
+
+<div class="container">
+  <div class="row mt-5">
+     <h3 class = "admin-customers-index" style="background-color:rgba(107,90,105,0.1);">ジャンル編集</h3>
+  </div>
+  <div class = "row m-5">
+    <%= form_with model:@genre, url:admin_genre_path, local:true do |f| %>
+      <div class="form-group form-inline">
+      <label for="genre_name">ジャンル名</label>
+        <%= f.text_field :name, class: "form-control mx-5" %>
+        <%= f.submit '変更を保存', class: "btn btn-success" %>
+      </div>
+    <% end %>
+  </div>
+</div>

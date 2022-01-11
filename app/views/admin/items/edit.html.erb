@@ -1,0 +1,68 @@
+<div class = "container">
+
+  <div class = "row mt-5">
+    <h3 class = "admin-items-new" style="background-color:rgba(107,90,105,0.1);">商品編集</h3>
+  </div>
+  
+  <div class = "row justify-content-center mt-5">
+    <%= form_with model:@item, url:admin_item_path, local:true do |f| %>
+    
+    <%= render 'admin/shared/error_messages',resource: @item %>
+      <div class="form-group form-inline ">
+      <label class="col-md-3">商品画像</label>
+        <div class="col-md-9">
+          <%= f.attachment_field :image%>
+        </div>
+      </div>
+      
+      <div class="form-group form-inline ">
+        <label class="col-md-3">商品名</label>
+        <div class="col-md-9 ">
+          <%= f.text_field :name, placeholder:"商品名", class:"form-control" %>
+        </div>
+      </div>
+
+      <div class="form-group form-inline">
+        <label class="col-md-3">商品説明</label>
+        <div class="col-md-9 ">
+          <%= f.text_area :body, rows:"5", placeholder:"ここに説明文を記述します", class: "form-control"%>
+        </div>
+      </div>
+
+      <div class="form-group form-inline">
+        <label class="col-md-3">ジャンル</label>
+        <div class="col-md-9">
+           <%= f.select :genre_id, options_from_collection_for_select(Genre.all, :id, :name),class:"form-control" %>
+        </div>
+      </div>
+
+      <div class="form-group form-inline">
+        <label class="col-md-3">税抜き価格</label>
+        <div class="col-md-9">
+          <%= f.text_field :price, placeholder:"1000", class: "form-control" %>円
+        </div>
+      </div>
+
+      <div class="form-group form-inline">
+        <label class="col-md-3">販売ステータス</label>
+        <div class="col-md-9 d-flex">
+          <div class = "form-check form-check-inline ">
+            <%= f.radio_button :is_status, 'true' %>
+            <%= f.label :is_status, '販売中', value: true %>
+          </div>
+          <div class = "form-check form-check-inline">
+            <%= f.radio_button :is_status, 'false' %>
+            <%= f.label :is_status, '販売停止中', value: false %>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group form-inline">
+        <div class = "col-md-3"></div>
+        <div class="actions col-md-9">
+          <%= f.submit "変更を保存", class: "btn btn-success" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
