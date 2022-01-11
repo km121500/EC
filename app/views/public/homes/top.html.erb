@@ -1,0 +1,38 @@
+
+   
+ <div class="jumbotron jumbotron-fluid text-white" >
+    <div class="container text-secondary">
+      <h1>ようこそ、ながのCAKEへ！</h1>
+      <p>このサイトはケーキ販売のECサイトになります。</br>
+      会員でない方も商品の閲覧はできますが、購入には会員登録が必要になります。
+              </p>
+    </div>
+  </div>
+<div class="container mt-3 mx-5">
+  <div class="row">
+
+    <%= render 'layouts/genre_search', genres: @genres %>
+
+      <div class="col-md-9 offset-1">
+        <h2 class="mt-2">新着商品</h2>
+      <%= render 'public/searchs/form' %>
+        <div class="d-flex align-content-between flex-wrap">
+          <% @items.each do |item| %>
+            <div class="col-md-3 mt-1">
+              <%= link_to item_path(item.id) do %>
+                <%= attachment_image_tag item, :image, size: "150x120", class:"card-img-top"; %>
+              <% end %>
+              <p class="card-title mx-auto pt-2">
+                <%= item.name %></br>
+                ¥<%= item.with_tax_price.to_s(:delimited) %>
+                <span class="small">(税込)</span>
+              </p>
+            </div>
+          <% end %>
+            <div class="col-md-12 text-right">
+              <%= link_to "全ての商品を見る＞", items_path %>
+            </div>
+        </div>
+      </div>
+  </div>
+</div>

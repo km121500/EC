@@ -1,0 +1,5 @@
+
+<% if @model == 'item' %>
+  <h3>【Usersモデルの検索結果】検索ワード：<%= @content %></h3>
+  <%= render 'items/index', users: @records %>
+<% end %>

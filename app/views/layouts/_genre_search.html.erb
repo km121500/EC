@@ -1,0 +1,16 @@
+<div class="col-md-2">
+  <table class="table text-center">
+    <thead>
+      <tr class="table-warning">
+        <th>ジャンル検索</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% genres.each do |genre| %>
+      <tr>
+        <td><%= link_to genre.name, items_path %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

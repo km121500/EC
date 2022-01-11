@@ -1,0 +1,18 @@
+ja:
+  activerecord:
+    models:
+      customer: ユーザー
+    attributes:
+      customer:
+        last_name: (性)
+        first_name: （名）
+        last_name_read: （セイ）
+        first_name_read: （メイ）
+        postal_code: 郵便番号
+        address: 住所
+        telephone_number: 電話番号
+        email: メールアドレス
+        current_password: 現在のパスワード
+        password: パスワード
+        password_confirmation: 確認用パスワード
+        remember_me: ログインを記憶

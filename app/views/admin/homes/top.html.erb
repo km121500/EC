@@ -1,0 +1,38 @@
+<div class = "container">
+  <p class="text-success"><%= flash[:notice]%></p>
+  <div class = "row mt-5">
+    <h3 class = "admin-customers-index" style="background-color:rgba(107,90,105,0.1);">注文履歴一覧</h3>
+  </div>
+
+  <div class = "row">
+    <div class = "col-md-8 mx-auto">
+      <table class = "table mt-5">
+        <thead>
+          <tr style="background-color:rgba(107,90,105,0.1);">
+            <th>購入日時</th>
+            <th>購入者</th>
+            <th>注文個数</th>
+            <th>注文ステータス</th>
+         </tr>
+        </thead>
+      <% @orders.each do |order| %>
+        <tbody>
+          <tr>
+            <td>
+              <%= link_to admin_order_path(order.id), class:"text-dark border-bottom" do %>
+                <%= order.created_at.strftime('%Y/%m/%d %H:%M:%S') %></td>
+              <% end %>
+            <td><%= order.customer.last_name %><%= order.customer.first_name %></td>
+            <td><%= order.order_details.sum(:quantity) %></td>
+            <td><%= order.order_status_i18n %></td>
+          </tr>
+        </tbody>
+        <% end %>
+      </table>
+      <div class = "justify-content-center">
+        <%= paginate @orders %>
+      </div>
+    </div>
+  </div>
+  
+</div>
