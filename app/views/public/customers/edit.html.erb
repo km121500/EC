@@ -1,0 +1,51 @@
+<div class="container d-contents">
+  <div class="row-md-12 mt-5">
+    <div>
+    <h3 class="ml-5 col-md-3 text-center d-inline" style="background-color:rgba(205, 197, 197, 0.53);">会員情報編集</h3>
+    </div>
+    
+    <div class="mt-5">
+    <%= form_with model:@customer,url: customers_path,local:true do |f|%>
+    <%= render 'layouts/error_messages', model: f.object %>
+      <div class="form-group">
+        <%= f.label :氏名 , class: "col-md-2" %>
+        <%= f.text_field :last_name, autocomplete: "last_name"%>
+        <%= f.text_field :first_name, autocomplete: "first_name" ,class: "ml-5" %>
+      </div>
+      
+      <div class="form-group mt-3">
+        <%= f.label :フリガナ , class: "col-md-2"   %>
+        <%= f.text_field :last_name_read, autocomplete: "last_name_read" %>
+        <%= f.text_field :first_name_read, autocomplete: "first_name_read",class: "ml-5"%>
+      </div>
+      
+      <div class="form-group">
+      <%= f.label :郵便番号, class: "col-md-2"%>
+      <%= f.text_field :postal_code, autocomplete: "postal_code"%>
+      </div>
+      
+      <div class="form-group">
+      <%= f.label :住所,class: "col-md-2"%>
+      <%= f.text_field :address,autocomplete: "address",class: "col-md-6"%>
+      </div>
+      
+      <div class="form-group">
+      <%= f.label :電話番号, class: "col-md-2"%>
+      <%= f.text_field :telephone_number, autocomplete: "telephone_number" %>
+      </div>
+    
+      <div class="form-group">
+        <%= f.label :メールアドレス , class: "col-md-2"%>
+        <%= f.email_field :email, autocomplete: "email"%>
+      </div>
+    
+      <div class="actions">
+        <%= f.label :空白, class: "col-md-2 text-white" %>
+        <%= f.submit"編集内容を保存する",class: "btn btn-success pl-5 pr-5 mr-3" %>
+        <%= link_to "退会する", erasure_customers_path ,class: "btn btn-danger offset-2 pr-4 pl-4"%>
+      </div>
+    <% end %>
+    </div>
+    
+  </div>
+</div>

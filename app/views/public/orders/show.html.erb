@@ -1,0 +1,75 @@
+<div class="container">
+  <div class="row mt-4">
+    <h2 class="d-inline" style="background-color:rgba(213,219,219,0.50);">注文履歴詳細</h2>
+  </div>
+  <div class="row">
+    <div class="col-md-5 mt-4">
+    <h5 class="font-weight-bold">注文情報</h5>
+    <table border=1>
+      <tr>
+        <th class="active col-md-3 pt-2 pb-2" style="background-color:rgba(213,219,219,0.50);">注文日</th>
+        <td><%= @order.created_at %></td>
+      </tr>
+      <tr>
+        <th class="active col-md-3 pt-2 pb-2" style="background-color:rgba(213,219,219,0.50);">配送先</th>
+        <td>
+          <%= @order.postal_code %></br>
+          <%= @order.address %></br>
+          <%= @order.orderer_name %>
+        </td>
+      </tr>
+      <tr>
+        <th class="active col-md-3 pt-2 pb-2" style="background-color:rgba(213,219,219,0.50);">支払方法</th>
+        <td><%= @order.payment_way %></td>
+      </tr>
+      <tr>
+        <th class="active col-md-3 pt-2 pb-2" style="background-color:rgba(213,219,219,0.50);">ステータス</th>
+        <td><%= @order.order_status %></td>
+      </tr>
+    </table>
+    </div>
+    <div class="mt-4">
+      <h5 class="font-weight-bold">請求情報</h5>
+      <table border=1 class="">
+        <tr>
+          <th class="active p-3" style="background-color:rgba(213,219,219,0.50);">商品合計</th>
+          <td class="pr-5">
+            <% @total = 0 %>
+            <%= @order.claimed - @order.postage %>
+          </td>
+        </tr>
+        <tr>
+          <th class="active p-3" style="background-color:rgba(213,219,219,0.50);">配送料</th>
+          <td class="pr-5"><%= @order.postage %></td>
+        </tr>
+        <tr>
+          <th class="active p-3" style="background-color:rgba(213,219,219,0.50);">ご請求額</th>
+          <td class="pr-5"><%= @order.claimed %></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div class="mt-3">
+  <h5 class="font-weight-bold">注文内容</h5>
+  </div>
+  <div class="row-md-12 mt-3 ml-1">
+  <table border=1>
+    <tr class="active">
+      <th class="col-md-5 p-2" style="background-color:rgba(213,219,219,0.50);">商品</th>
+      <th class="col-md-2 p-2" style="background-color:rgba(213,219,219,0.50);">単価（税込）</th>
+      <th class="col-md-2 p-2" style="background-color:rgba(213,219,219,0.50);">個数</th>
+      <th class="col-md-2 p-2" style="background-color:rgba(213,219,219,0.50);">小計</th>
+    </tr>
+    <% @order_details.each do |order_detail| %>
+    <tr>
+      <td class="p-2"><%= order_detail.item.name %></td>
+      <td class="p-2"><%= order_detail.price %></td>
+      <td class="p-2"><%= order_detail.quantity %></td>
+      <td class="p-2"><%= order_detail.subtotal %></td>
+    </tr>
+    <% @total += order_detail.subtotal %>
+    <% end %>
+  </table>
+  </div>
+    
+</div>

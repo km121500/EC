@@ -1,0 +1,58 @@
+<div class="container">
+  <p class="text-danger"><%= flash[:alert]%></p>
+  <div class="row mt-3">
+    <div class="col-md-12">
+      <h4 class="col-md-3 text-right">注文情報入力</h4>
+      <h6><strong>支払方法</strong></h6>
+      <%= form_with model: @order, url: orders_check_path, method: :post, local: true do |f| %>
+        <div class="form-check">
+          <%= f.radio_button :payment_way, :クレジットカード, checked: "checked" %>
+          <%= f.label :payment_way, "クレジットカード", {value: :クレジットカード, style: "display: inline-block;"} %>
+        </div>
+        <div class="form-check">
+          <%= f.radio_button :payment_way, :銀行振込 %>
+          <%= f.label :payment_way, "銀行振込", {value: :銀行振込, style: "display: inline-block;"} %>
+        </div>
+        <h6><strong>お届け先</strong></h6>
+        <div class="form-check">
+          <%= f.radio_button :address_option, 0, checked: "checked" %>
+          <%= f.label :address_option_0, "ご自身の住所" %></br>
+          <label class="address_option_0 ml-4">
+          〒<%= current_customer.postal_code %>
+          <%= current_customer.address %></br>
+          <%= current_customer.last_name %>
+          <%= current_customer.first_name %>
+          </label>
+        </div>
+        <div class="form-check">
+          <%= f.radio_button :address_option, 1 %>
+          <%= f.label :address_option_1, "登録済み住所から選択" %>
+            <div class="form-group ml-4">
+              <%= f.collection_select :registered, current_customer.addresses.all, :id, :full_address %>
+            </div>
+        </div>
+        <div class="form-check">
+          <%= f.radio_button :address_option, 2 %>
+          <%= f.label :address_option_2, "新しいお届け先" %>
+
+            <div class="form-group ml-4">
+              <%= f.label :郵便番号（ハイフンなし）, class: "col-md-3" %>
+              <%= f.text_field :postal_code, autocomplete: "postal_code" ,placeholder: "0000000" %>
+            </div>
+            <div class="form-group ml-4">
+              <%= f.label :住所 , class: "col-md-3" %>
+              <%= f.text_field :address, autocomplete: "address", class: 'col-md-5' ,placeholder: "東京都渋谷区代々木神園町0-0" %>
+            </div>
+            <div class="form-group ml-4">
+              <%= f.label :宛名 , class: "col-md-3"%>
+              <%= f.text_field :orderer_name, autocomplete: "postal_code" ,placeholder: "令和道子" %>
+            </div>
+
+        </div>
+        <div class="row d-flex justify-content-center">
+        <%= f.submit "確認画面へ進む", class: "btn btn-primary col-md-2" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div
