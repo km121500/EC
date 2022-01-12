@@ -1,0 +1,71 @@
+<div class = "container">
+
+  <p class="text-success"><%= flash[:notice]%></p>
+  <div class = "row mt-5">
+    <h3 class = "admin-orders-show" style="background-color:rgba(107,90,105,0.1);">注文履歴詳細</h3>
+  </div>
+
+  <div class = "row"> 
+    <div class = "col">
+      
+      <table class = "table table-borderless">
+        <tr>
+          <th>購入者</th>
+          <td>
+            <%= link_to admin_customer_path(@order.customer_id), class:"text-dark border-bottom" do %>
+              <%= @order.customer.last_name %><%= @order.customer.first_name %>
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <th>注文日</th>
+          <td><%= @order.created_at.strftime('%Y/%m/%d') %></td>
+        </tr>
+        <tr>
+          <th>配送先</th>
+          <td>
+            〒<%= @order.postal_code %><%= @order.address %></br>
+            <%= @order.orderer_name %>
+          </td>
+        </tr>
+        <tr>
+          <th>支払い方法</th>
+          <td><%= @order.payment_way_i18n %></td>
+        </tr>
+        <tr>
+          <th>注文ステータス</th>
+          <td>
+            <%= form_with model:@order,url:admin_order_path(@order), local:true do |f| %>
+              <%= f.select :order_status, options_for_select(Order.order_statuses_i18n.invert, selected: f.object.order_status) %>
+              <%= f.submit "更新", class: "btn btn-success"%>
+            <% end %>
+          </td>
+        </tr>
+      </table>
+      
+    </div>
+  </div>
+    
+  <div class = "row">
+    <div class = "col-md-8">
+      <%= render 'admin/orders/show', order_details: @order_details %>
+    </div>
+    <h4 class = "col-md-3 offset-md-1 mt-5">
+      <table class = "table table-borderless">
+      <tr>
+        <th>商品合計</th>
+        <td><%= @total %></td>
+      </tr>
+      <tr>
+        <th>送料</th>
+        <td><%= @order.postage %></td>
+      </tr>
+      <tr>
+        <th>請求金額</th>
+        <td><%= @order.claimed %></td>
+      </tr>
+      </table>
+    </h4>
+  </div>
+  
+</div>

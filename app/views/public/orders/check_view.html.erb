@@ -1,0 +1,73 @@
+<div class="container">
+  <div class="row-md-12 mt-4">
+  <h5 class="ml-5 d-inline pl-3 pr-3" style="background-color:rgba(213,219,219,0.50);">注文情報確認</h5>
+  </div>
+  <div class="row mt-2">
+    <div class="col-md-7 ">
+      <table border=1 >
+        <thead>
+          <tr class="active" style="background-color:rgba(213,219,219,0.50);">
+            <th class="col-md-5 p-2">商品名</th>
+            <th class="col-md-2 p-2">単価(税込)</th>
+            <th class="col-md-1 p-2">数量</th>
+            <th class="col-md-2 p-2">小計</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @total = 0 %>
+          <% @cart_items.each do |cart_item| %>
+          <tr>
+            <td class="p-2">
+              <%= attachment_image_tag cart_item.item, :image, size: "80x60", fallback: "no_image1.png" %>
+              <%= cart_item.item.name %>
+            </td>
+            <td class="p-2"><%= cart_item.with_tax_price.to_s(:delimited) %></td>
+            <td class="p-2"><%= cart_item.quantity %></td>
+            <td class="p-2"><%= cart_item.subtotal.to_s(:delimited) %></td>
+          </tr>
+          <% @total += cart_item.subtotal %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-md-3">
+      <table border=1>
+        <tr class="active p-5">
+          <th class="col-md-1 text-left p-2" style="background-color:rgba(213,219,219,0.50);">送料</th>
+          <td class="col-md-1 p-2"><%= @order.postage.to_s %></td>
+        </tr>
+        <tr class="active">
+          <th class="p-2" style="background-color:rgba(213,219,219,0.50);">商品合計</th>
+          <td class="p-2"><%= @total.to_s(:delimited) %></td>
+        </tr>
+        <tr>
+          <th class="p-2" style="background-color:rgba(213,219,219,0.50);">請求合計</th>
+          <td class="p-2"><%= @order.postage.to_i + @total %></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+    <div class="form-inline">
+      <h6 class="pt-2 mr-4"><strong>支払方法</strong></h6>
+        <%= @order.payment_way %>
+
+    </div>
+    <div class="form-inline mt-2">
+      <h6 class="mr-4"><strong>お届け先</strong></h6>
+      <span class="d-inline mt-3">
+        〒<%= @order.postal_code %><%= @order.address %></br>
+        <%= @order.orderer_name %>
+      </span>
+    </div>
+    <div class="col text-center">
+    <%= form_with model: @order, url: orders_path, local: true do |f| %>
+      <%= f.hidden_field :postal_code %>
+      <%= f.hidden_field :address %>
+      <%= f.hidden_field :orderer_name %>
+      <%= f.hidden_field :payment_way %>
+      <%= f.hidden_field :postage %>
+      <%= f.hidden_field :claimed, :value => [@order.postage.to_i + @total] %>
+    <%= f.submit "注文を確定する", class: 'btn btn-success mt-4 mx-auto' %>
+    <% end %>
+    </div>
+</div>
