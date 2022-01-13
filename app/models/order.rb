@@ -10,5 +10,4 @@ class Order < ApplicationRecord
   validates :postal_code, presence: true
   validates :address, presence: true
   validates :orderer_name, presence: true
-
 end
