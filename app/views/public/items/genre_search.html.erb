@@ -1,0 +1,30 @@
+<div class = "container">
+  <div class = "mx-auto  row  pt-3">
+    <!--ジャンル検索欄-->
+    <div class="col-2">
+      <%= render 'layouts/genre_search', genres: @genres %>
+      <!--すべての商品一覧へのリンク-->
+      <%= link_to ">>全ての商品一覧へ", items_path, class: "d-block mt-4" %>
+    </div>
+    <!--商品一覧-->
+    <div class = "col-10">
+      <h3 class = "m-2 py-2" style = 'background: linear-gradient(to right, #fff 0%, #ffd6ff 30%, #ffd6ff 70%, #fff 100%);  font-weight: 600; width: 100%;' >
+        <%= @genre_searched.name %>一覧<span class = "h5">（<%= "#{@all_items_searched.count}件" %>）</span>
+      </h3>
+      <div class = "items-list d-flex flex-wrap w-100 mb-3">
+        <% if !(@items.blank?) %>
+          <% @items.each do |item| %>
+            <div class = "card card-scale_animation item  p-3 w-25  text-truncate">
+              <%= link_to item_path(item), style: "text-decoration: none;" do %>
+                <%= attachment_image_tag item, :image, :fill, 200, 200, resize:"200×200", class:"index-img w-100"%>
+                <p class = "h6 text-secondary"><%= item.name %></p>
+                <p class = "h6 text-right text-secondary" ><%= item.price%>円（税抜）</p>
+              <% end %>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+      <%= paginate @items %>
+    </div>
+  </div>
+</div>

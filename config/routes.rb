@@ -28,6 +28,7 @@ Rails.application.routes.draw do
       end
     end
     resources :items, only: [:index, :show]
+    get "items/genre_search/:id", to: "items#genre_search",as: 'items_genre_search'
     post 'orders/check' => 'orders#check'
     get 'orders/check_view' => 'orders#check_view'
     get 'orders/success' => 'orders/success'

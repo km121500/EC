@@ -16,3 +16,59 @@
 @import "bootstrap";
 @import 'font-awesome-sprockets';
 @import 'font-awesome';
+
+* {
+  box-sizing: border-box;
+}
+ 
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+ 
+body {
+  display: flex;
+  flex-direction: column;
+  padding-top: 5rem; 
+}
+ 
+footer {
+  margin-top: auto;
+  padding: 30px 0;
+  color: #fff;
+  text-align: center;
+}
+
+
+.field_with_errors {
+  display: contents;
+}
+
+.fa, .fas {
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 600;
+  line-height: normal;
+}
+
+#notice {
+  color: green;
+}
+
+#error_explanation {
+  color: red;
+}
+
+div {
+  &.field, &.actions {
+    margin-bottom: 10px;
+  }
+}
+
+.btn-light{
+  border-color: #d3d3d3;
+}
+
+.pagination {
+  justify-content: center;
+}
