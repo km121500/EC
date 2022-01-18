@@ -1,0 +1,26 @@
+<h1>クレジットカード登録フォーム</h1>
+<%= form_with url: cards_path, id: "card_form", local: true do |f| %>
+  <div>
+    <%= f.label :number, "カード番号" %>
+    <%= f.text_field :number %>
+  </div>
+  <div>
+    <%= f.label :name, "カード名義人" %>
+    <%= f.text_field :name %>
+  </div>
+  <div>
+    <%= f.label :cvc, "セキュリティコード" %>
+    <%= f.text_field :cvc %>
+  </div>
+  <div>
+    <%= f.label :exp_month, "有効期限（月）" %>
+    <%= f.text_field :exp_month %>
+  </div>
+  <div>
+    <%= f.label :exp_year, "有効期限（年）" %>
+    <%= f.text_field :exp_year %>
+  </div>
+  <div>
+    <%= f.submit "送信" %>
+  </div>
+<% end %>

@@ -22,6 +22,7 @@ Rails.application.routes.draw do
     root to: 'homes#top'
     get '/about' => 'homes#about'
     resources :addresses, except: [:new, :show]
+    resources :cards, only: [:new, :create]
     resources :cart_items, except: [:new, :show, :edit] do
       collection do
         delete 'destroy_all'
