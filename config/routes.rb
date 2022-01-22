@@ -41,6 +41,7 @@ Rails.application.routes.draw do
         get :edit
         patch :leave
         get :erasure
+        get :creditcard
       end
     end
   end

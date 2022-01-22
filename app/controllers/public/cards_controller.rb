@@ -17,7 +17,7 @@ class Public::CardsController < ApplicationController
       customer_id: current_customer.id
     )
     
-    if card.save
+    if card.save!
       redirect_to root_path
     else
       redirect_to new_card_path
