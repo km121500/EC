@@ -1,0 +1,6 @@
+<h1><%= current_customer.last_name %>さんのページ</h1>
+<h2>カード情報</h2>
+<p>カード番号：**** **** **** <%= @card.last4%></p>
+<p>カード名義人: <%= @card.name %></p>
+<p>有効期限：<%= @card.exp_month %> / <%= @card.exp_year %></p>
+<p>ブランド：<%= @card.brand %></p>

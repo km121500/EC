@@ -30,6 +30,16 @@ class Public::CustomersController < ApplicationController
     end
     redirect_to root_path
   end
+  
+  def creditcard
+    @customer = Customer.find(current_customer.id)
+    Payjp.api_key = ENV["PAYJP_SECRET_KEY"] # PAY.JPに秘密鍵を使ってアクセス
+    card = Card.find_by(customer_id: current_customer.id) # cardsテーブルからユーザーのカード情報を取得
+    if card.present?
+      payjp = Payjp::Customer.retrieve(card.payjp_id) # 顧客idを元に、顧客情報を取得
+      @card = payjp.cards.first # cards.firstで登録した最初のカード情報を取得
+    end
+  end
 
   private
 

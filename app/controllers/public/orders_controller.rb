@@ -43,7 +43,29 @@ class Public::OrdersController < ApplicationController
   def create
     cart_items = current_customer.cart_items.all
     @orders = current_customer.orders.new(order_params)
-    @orders.save
+    if @orders.payment_way == "クレジットカード"
+      return redirect_to new_card_path unless current_customer.card.present?
+      item_ids = cart_items.map(&:item_id)
+      amount = 0
+      item_ids.each do |item_id|
+        price = Item.find(item_id).price
+        quantity = cart_items.find_by(item_id: item_id).quantity
+        amount += price * quantity
+      end
+      amount += 800 # TODO fix this
+      # order = Item.find(params[:order_id]) # 購入する商品のレコードを取得
+      Payjp.api_key = ENV["PAYJP_SECRET_KEY"] # PAY.JPに秘密鍵を設定
+      payjp_id = current_customer.card.payjp_id # 顧客idを取得
+      Payjp::Charge.create( # PAY.JPに購入価格と顧客id、通貨の種類を渡す
+        amount: amount,
+        customer: payjp_id,
+        currency: 'jpy' 
+      )
+      @orders.save
+      byebug
+    else
+      @orders.save
+    end
       cart_items.each do |cart_item|
         order_detail = OrderDetail.new
         order_detail.order_id = @orders.id
@@ -77,7 +99,7 @@ class Public::OrdersController < ApplicationController
   end
 
   def order_params
-    params.require(:order).permit(:orderer_name, :postal_code, :address, :postage, :claimed)
+    params.require(:order).permit(:orderer_name, :postal_code, :address, :postage, :claimed, :payment_way)
   end
 
   def address_params
