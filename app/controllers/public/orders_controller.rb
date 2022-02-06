@@ -13,9 +13,9 @@ class Public::OrdersController < ApplicationController
     @order.postage = 800                                  #送料の定義づけ
 
     if params[:order][:address_option] == "0"             #address_optionが0の場合
-      @order.postal_code = current_customer.postal_code     #自分の郵便番号をpostal_codeに保存
-      @order.address = current_customer.address                 #自分の住所をaddressに保存
-      @order.orderer_name = current_customer.last_name + current_customer.first_name    #名前をorder_nameに保存
+      @order.postal_code = current_customer.postal_code     #自分の郵便番号をpostal_code取得
+      @order.address = current_customer.address                 #自分の住所をaddress取得
+      @order.orderer_name = current_customer.last_name + current_customer.first_name    #名前をorder_name取得
 
     elsif params[:order][:address_option] == "1"      #address_optionが1の場合
       @order.postal_code = Address.find(params[:order][:registered]).postal_code
@@ -41,11 +41,11 @@ class Public::OrdersController < ApplicationController
   end
 
   def create
-    cart_items = current_customer.cart_items.all
-    @orders = current_customer.orders.new(order_params)
+    cart_items = current_customer.cart_items.all #自分のカートアイテムを全て取得
+    @orders = current_customer.orders.new(order_params)  #paramsで取得
     if @orders.payment_way == "クレジットカード"
       return redirect_to new_card_path unless current_customer.card.present?
-      item_ids = cart_items.map(&:item_id)
+      item_ids = cart_items.map(&:item_id) #mapで取得した要素の配列を作る
       amount = 0
       item_ids.each do |item_id|
         price = Item.find(item_id).price
@@ -62,7 +62,6 @@ class Public::OrdersController < ApplicationController
         currency: 'jpy' 
       )
       @orders.save
-      byebug
     else
       @orders.save
     end
